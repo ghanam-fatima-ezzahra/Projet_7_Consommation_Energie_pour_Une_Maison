@@ -40,6 +40,26 @@ Canal B : Consommation d’ énergie par équipements : https://thingspeak.mathw
 
 ## Résultats
 
+### 1. Bilan de consommation
+
 ![Bilan](docs/bilan.png)
+
+Sur la journée simulée, la maison consomme **15,14 kWh**, soit un coût de **18,17 MAD** (tarif de 1,2 MAD/kWh).
+- **Par pièce :** le salon est le plus gourmand (5,85 kWh, 39 %), suivi de la cuisine (4,17 kWh, 28 %) et de la salle de bain (3,52 kWh, 23 %). La chambre, la buanderie et les toilettes représentent moins de 12 % à elles trois.
+- **Par équipement :** le climatiseur domine avec 5,12 kWh, soit environ un tiers de la consommation totale. Viennent ensuite le chauffe-eau (3,03 kWh) et le four (2,00 kWh).
+- **Profil horaire :** la consommation est faible la nuit (réfrigérateur), avec un pic le matin vers 7 h (chauffe-eau, salle de bain). Les pics les plus marqués ont lieu l'après-midi et le soir, entre 13 h et 22 h (climatiseur, four, chauffe-eau).
+
+### 2. Analyse des données ThingSpeak et alertes
+
 ![Analyse ThingSpeak](docs/analyse_thingspeak.png)
+
+Ce graphique est produit par `alerte-automatique.py` à partir des exports ThingSpeak.
+- **Compteur général :** la puissance totale dépasse deux fois le **seuil de 3000 W** (3857 W à 22 h 30 et 3036 W à 22 h 33). Ces deux points déclenchent les alertes, enregistrées dans `data/alertes.csv`.
+- **Puissance moyenne par pièce :** le salon (environ 245 W), la cuisine (environ 175 W) et la salle de bain (environ 147 W) arrivent en tête, ce qui est cohérent avec le bilan en kWh.
+- **Puissance moyenne par équipement :** le climatiseur (environ 213 W) et le chauffe-eau (environ 126 W) sont les plus sollicités. Ce sont les premiers appareils à surveiller pour réduire la facture.
+
+### 3. Notification d'alerte par e-mail
+
 ![Notification des Alertes par Email](docs/Notification_Alerte_par_Email.png)
+
+Quand la puissance du compteur dépasse le seuil de 3000 W, une notification est envoyée automatiquement par e-mail. Cette capture montre le message reçu. Elle prouve que la chaîne de détection et d'alerte fonctionne, de la mesure sur ThingSpeak jusqu'à l'avertissement de l'utilisateur.
