@@ -23,19 +23,23 @@ Les graphiques suivent la puissance (W) de la cuisine, du salon, de la chambre, 
 pip install -r requirements.txt
 
 # 1. (optionnel) envoi vers ThingSpeak : définir les Write API Keys
-export THINGSPEAK_KEY_GENERAL=xxxxxxxx   # canal A : compteur + pièces
-export THINGSPEAK_KEY_EQUIP=yyyyyyyy     # canal B : équipements
+export THINGSPEAK_KEY_GENERAL=8CV3G5IHNUQCTTMY   # canal A : compteur + pièces
+export THINGSPEAK_KEY_EQUIP=CLVMXN9EY6UULDK2   # canal B : équipements
 python energie_bilan.py                  # sans clés : simulation locale uniquement
 
 # 2. analyse des exports et alertes
 python alerte-automatique.py
 ```
 
-Sous Windows (PowerShell) : `$env:THINGSPEAK_KEY_GENERAL="xxxx"`.
+Dashboard public :
+Canal A : Consommation d’énergie par pièces de la maison :
+         https://thingspeak.mathworks.com/channels/3550172
+Canal B : Consommation d’ énergie par équipements : 
+         https://thingspeak.mathworks.com/channels/3550188
 
-> Les clés API ne sont volontairement pas dans le code du dépôt public.
 
 ## Résultats
 
 ![Bilan](docs/bilan.png)
 ![Analyse ThingSpeak](docs/analyse_thingspeak.png)
+![Notification des Alertes par Email](docs/Notification_Alerte_par_Email.png)

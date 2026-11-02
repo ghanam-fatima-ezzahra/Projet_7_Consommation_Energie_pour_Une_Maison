@@ -2,8 +2,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # ============ CONFIGURATION ============
-FICHIER_A = 'data/feeds_consomation_par_peices.csv'        # export ThingSpeak : compteur + pièces
-FICHIER_B = 'data/feeds_consommation_par_equipements.csv'  # export ThingSpeak : équipements
+FICHIER_A = 'feeds_consomation_par_peices.csv'        # export ThingSpeak : compteur + pièces
+FICHIER_B = 'feeds_consommation_par_equipements.csv'  # export ThingSpeak : équipements
 SEUIL_W = 3000                   # seuil d'alerte de surconsommation (W)
 TARIF_KWH = 1.2                  # MAD par kWh
 # =======================================
@@ -69,7 +69,7 @@ alertes = total[total > SEUIL_W]
 print(f'\n=== ALERTES (> {SEUIL_W} W) : {len(alertes)} ===')
 for t, v in alertes.items():
     print(f'  ALERTE {t:%H:%M:%S} : {v:.0f} W')
-alertes.rename('puissance_W').to_csv('data/alertes.csv', sep=';')
+alertes.rename('puissance_W').to_csv('alertes.csv', sep=';')
 
 # ---------- 3) Pièces et équipements ----------
 pieces = a[['Cuisine', 'Salon', 'Chambre', 'Salle de bain', 'Toilettes', 'Buanderie']]
@@ -99,6 +99,6 @@ ax[2].barh(moy_equip.index[::-1], moy_equip.values[::-1], color='tab:green')
 ax[2].set_title('Puissance moyenne par équipement (W)')
 
 plt.tight_layout()
-plt.savefig('docs/analyse_thingspeak.png', dpi=150)
-print('\nGraphique créé : docs/analyse_thingspeak.png | Alertes : data/alertes.csv')
+plt.savefig('analyse_thingspeak.png', dpi=150)
+print('\nGraphique créé : analyse_thingspeak.png | Alertes : alertes.csv')
 plt.show()

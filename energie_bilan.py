@@ -1,22 +1,19 @@
 import csv
-import os
 import time
 import requests
 import matplotlib.pyplot as plt
 from random import randint
 
 # ============ CONFIGURATION ============
-# Les clés ne sont PAS dans le code : définissez-les dans votre terminal
-#   export THINGSPEAK_KEY_GENERAL=xxxx   et   export THINGSPEAK_KEY_EQUIP=yyyy
-KEY_GENERAL = os.environ.get('THINGSPEAK_KEY_GENERAL', '')   # Write API Key du canal A
-KEY_EQUIP = os.environ.get('THINGSPEAK_KEY_EQUIP', '')       # Write API Key du canal B
+KEY_GENERAL = '8CV3G5IHNUQCTTMY'   # <-- collez votre Write API Key du canal A
+KEY_EQUIP = 'CLVMXN9EY6UULDK2'     # <-- collez votre Write API Key du canal B
 URL = 'https://api.thingspeak.com/update.json'
 
 INTERVALLE = 20    # secondes entre deux envois (minimum 15 en gratuit)
 PAS_MIN = 15       # minutes simulées par envoi (96 pas = 1 journée)
 JOURS = 1          # nombre de jours simulés
 TARIF_KWH = 1.2    # MAD par kWh
-ENVOYER = bool(KEY_GENERAL and KEY_EQUIP)  # False = simulation locale rapide | True = envoi ThingSpeak (~32 min)
+ENVOYER = True  # False = simulation locale rapide | True = envoi ThingSpeak (~32 min)
 # =======================================
 
 PIECES = ['Cuisine', 'Salon', 'Chambre', 'Salle de bain', 'Toilettes', 'Buanderie']
@@ -128,7 +125,7 @@ def tracer(energie, historique):
     ax[1, 1].legend(loc='upper left', fontsize=8)
 
     plt.tight_layout(rect=[0, 0, 1, 0.96])
-    plt.savefig('docs/bilan.png', dpi=150)
+    plt.savefig('bilan.png', dpi=150)
     print('Graphique créé : bilan.png')
     plt.show()
 
@@ -150,7 +147,7 @@ def bilan(energie, historique):
     print(f'\nTOTAL COMPTEUR : {total:.3f} kWh | {total * TARIF_KWH:.2f} MAD')
     print(f'Vérification somme des pièces : {sum(par_piece.values()):.3f} kWh')
 
-    with open('data/bilan_equipements.csv', 'w', newline='', encoding='utf-8-sig') as f:
+    with open('bilan_equipements.csv', 'w', newline='', encoding='utf-8-sig') as f:
         w = csv.writer(f, delimiter=';')
         w.writerow(['Equipement', 'Piece', 'kWh', 'Pourcentage', 'Cout_MAD'])
         for nom, e in energie.items():
@@ -165,7 +162,7 @@ def main():
     historique = []
     nb_pas = int(24 * 60 / PAS_MIN) * JOURS
     pause = INTERVALLE if ENVOYER else 0
-    journal = open('data/journal.csv', 'w', newline='', encoding='utf-8-sig')
+    journal = open('journal.csv', 'w', newline='', encoding='utf-8-sig')
     wj = csv.writer(journal, delimiter=';')
     wj.writerow(['heure', 'total_W'] + PIECES)
     mode = 'avec envoi ThingSpeak' if ENVOYER else 'simulation locale rapide'
