@@ -32,10 +32,10 @@ python alerte-automatique.py
 ```
 
 Dashboard public :
-Canal A : Consommation d’énergie par pièces de la maison :
-         https://thingspeak.mathworks.com/channels/3550172
-Canal B : Consommation d’ énergie par équipements : 
-         https://thingspeak.mathworks.com/channels/3550188
+
+Canal A : Consommation d’énergie par pièces de la maison :https://thingspeak.mathworks.com/channels/3550172
+
+Canal B : Consommation d’ énergie par équipements : https://thingspeak.mathworks.com/channels/3550188
 
 
 ## Résultats
